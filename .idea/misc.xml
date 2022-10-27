@@ -4,6 +4,7 @@
     <option name="originalFiles">
       <list>
         <option value="$PROJECT_DIR$/h2databasedemo/pom.xml" />
+        <option value="$PROJECT_DIR$/libraryms/pom.xml" />
       </list>
     </option>
   </component>

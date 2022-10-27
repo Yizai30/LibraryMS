@@ -4,6 +4,7 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/bookms-rear.iml" filepath="$PROJECT_DIR$/.idea/bookms-rear.iml" />
       <module fileurl="file://$PROJECT_DIR$/h2databasedemo/h2databasedemo.iml" filepath="$PROJECT_DIR$/h2databasedemo/h2databasedemo.iml" />
+      <module fileurl="file://$PROJECT_DIR$/libraryms/libraryms.iml" filepath="$PROJECT_DIR$/libraryms/libraryms.iml" />
     </modules>
   </component>
 </project>
