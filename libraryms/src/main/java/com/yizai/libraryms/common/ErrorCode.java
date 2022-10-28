@@ -7,12 +7,17 @@ package com.yizai.libraryms.common;
  */
 public enum ErrorCode {
 
+    /**
+     *
+     */
     SUCCESS(0, "ok", ""),
     PARAMS_ERROR(40000, "请求参数错误", ""),
     NULL_ERROR(40001, "请求数据为空", ""),
     LOGIN_FAILED(40100, "登录失败", ""),
     NOT_LOGIN(40101, "未登录", ""),
     NO_AUTH(40102, "无权限", ""),
+    REGISTER_FAILED(40200, "注册失败", ""),
+    DATA_INSERT_FAILED(40300, "数据插入失败", ""),
     SYSTEM_ERROR(50000, "系统内部异常", "");
 
     private final int code;

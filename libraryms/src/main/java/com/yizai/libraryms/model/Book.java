@@ -8,45 +8,35 @@ import lombok.Data;
 import java.util.Date;
 
 /**
- * 用户实体
+ * 书籍实体
  *
  * @author yizai
- * @since 2022/10/27 11:08
+ * @since 2022/10/29 00:14
  */
-@TableName(value = "user_info")
+@TableName(value = "book_info")
 @Data
-public class User {
+public class Book {
     /**
-     * 用户 ID
+     * 书籍 ID
      */
     @TableId(type = IdType.AUTO)
     private Long id;
-
     /**
-     * 账号
+     * 书籍名称
      */
-    private String userAccount;
-
+    private String bookName;
     /**
-     * 密码
+     * 书籍描述
      */
-    private String userPassword;
-
-    /**
-     * 用户角色：0 - 普通用户，1 - 管理员
-     */
-    private Integer userRole;
-
+    private String bookDescription;
     /**
      * 创建时间
      */
     private Date createTime;
-
     /**
      * 更新时间
      */
     private Date updateTime;
-
     /**
      * 是否删除
      */

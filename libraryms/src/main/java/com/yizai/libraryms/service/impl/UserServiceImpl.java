@@ -81,7 +81,8 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
         user.setUserPassword(encryptPassword);
         boolean saveResult = this.save(user);
         if (!saveResult) {
-            return -1;
+//            return -1;
+            throw new BusinessException(ErrorCode.SYSTEM_ERROR);
         }
         return user.getId();
     }
