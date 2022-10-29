@@ -66,7 +66,7 @@ public class BookController {
     }
 
     @GetMapping("/list")
-    public BaseResponse<List<BookVO>> listTeams(BookQuery bookQuery) {
+    public BaseResponse<List<BookVO>> listBooks(BookQuery bookQuery) {
         if (bookQuery == null) {
             throw new BusinessException(ErrorCode.PARAMS_ERROR);
         }

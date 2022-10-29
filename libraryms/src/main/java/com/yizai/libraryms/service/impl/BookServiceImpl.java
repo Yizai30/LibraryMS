@@ -10,6 +10,7 @@ import com.yizai.libraryms.model.Book;
 import com.yizai.libraryms.model.User;
 import com.yizai.libraryms.model.dto.BookQuery;
 import com.yizai.libraryms.model.request.BookUpdateRequest;
+import com.yizai.libraryms.model.response.UserLoginResponse;
 import com.yizai.libraryms.model.vo.BookVO;
 import com.yizai.libraryms.service.BookService;
 import org.apache.commons.lang3.StringUtils;
@@ -84,7 +85,7 @@ public class BookServiceImpl extends ServiceImpl<BookMapper, Book>
             }
             String bookDescription = bookQuery.getBookDescription();
             if (StringUtils.isNotBlank(bookDescription)) {
-                queryWrapper.like("description", bookDescription);
+                queryWrapper.like("bookDescription", bookDescription);
             }
         }
         // 查询
@@ -110,7 +111,7 @@ public class BookServiceImpl extends ServiceImpl<BookMapper, Book>
      */
     private boolean isAdmin(HttpServletRequest request) {
         Object userObj = request.getSession().getAttribute(USER_LOGIN_STATE);
-        User user = (User) userObj;
-        return user != null && user.getUserRole() == ADMIN_ROLE;
+        UserLoginResponse safetyUser = (UserLoginResponse) userObj;
+        return safetyUser != null && safetyUser.getUserRole() == ADMIN_ROLE;
     }
 }
