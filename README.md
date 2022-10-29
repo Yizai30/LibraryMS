@@ -43,15 +43,15 @@ ORM 框架：MyBatis-Plus
 
 - 向数据库中添加约 1000000 条数据，经测试分页查询接口的响应速度大于 1 秒。
 
-  ![image-20221029191316370](/Users/yizai/Library/Application Support/typora-user-images/image-20221029191316370.png)
+  ![image-20221029191316370](./illustrates/image-20221029191316370.png)
 
-  ![image-20221029190555313](/Users/yizai/Library/Application Support/typora-user-images/image-20221029190555313.png)
+  ![image-20221029190555313](./illustrates/image-20221029190555313.png)
 
 - 通过 Redis 数据库实现缓存技术，在短时间内发起相同的查询请求时，除第一次查询响应较慢外，之后的请求均可直接从缓存中查询数据，查询速度至少为原来的 10 倍。
 
-  ![image-20221029190635521](/Users/yizai/Library/Application Support/typora-user-images/image-20221029190635521.png)
+  ![image-20221029190635521](./illustrates/image-20221029190635521.png)
 
-  ![image-20221029190713300](/Users/yizai/Library/Application Support/typora-user-images/image-20221029190713300.png)
+  ![image-20221029190713300](./illustrates/image-20221029190713300.png)
 
 - 由于缓存空间有限，所以需要为 Redis 数据库中的每条数据设置过期时间。对于长时间未再次发起的请求，清除在缓存中的相应记录。例如，如果 5 分钟内未再次发起相同的请求，则 Redis 数据库自动删除相应的数据。
 
