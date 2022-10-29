@@ -73,7 +73,7 @@ public class BookController {
     }
 
     @GetMapping("/list/page")
-    public BaseResponse<Page<Book>> listTeamsByPage(BookQuery bookQuery) {
+    public BaseResponse<Page<Book>> listBooksByPage(BookQuery bookQuery) {
         if (bookQuery == null) {
             throw new BusinessException(ErrorCode.PARAMS_ERROR);
         }
