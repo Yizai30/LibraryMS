@@ -1,27 +1,21 @@
 package com.yizai.libraryms.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.baomidou.mybatisplus.core.toolkit.CollectionUtils;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.yizai.libraryms.common.ErrorCode;
 import com.yizai.libraryms.exception.BusinessException;
 import com.yizai.libraryms.mapper.BookMapper;
 import com.yizai.libraryms.model.Book;
-import com.yizai.libraryms.model.User;
 import com.yizai.libraryms.model.dto.BookQuery;
 import com.yizai.libraryms.model.request.BookUpdateRequest;
 import com.yizai.libraryms.model.response.UserLoginResponse;
-import com.yizai.libraryms.model.vo.BookVO;
 import com.yizai.libraryms.service.BookService;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
-import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import static com.yizai.libraryms.constant.UserConstant.ADMIN_ROLE;
 import static com.yizai.libraryms.constant.UserConstant.USER_LOGIN_STATE;
@@ -71,7 +65,7 @@ public class BookServiceImpl extends ServiceImpl<BookMapper, Book>
     }
 
     @Override
-    public List<BookVO> listBooks(BookQuery bookQuery) {
+    public Page<Book> listBooksByPage(Page<Book> page, BookQuery bookQuery) {
         QueryWrapper<Book> queryWrapper = new QueryWrapper<>();
         // 组合查询条件
         if (bookQuery != null) {
@@ -88,19 +82,7 @@ public class BookServiceImpl extends ServiceImpl<BookMapper, Book>
                 queryWrapper.like("bookDescription", bookDescription);
             }
         }
-        // 查询
-        List<Book> bookList = this.list(queryWrapper);
-        if (CollectionUtils.isEmpty(bookList)) {
-            return new ArrayList<>();
-        }
-        // 封装
-        List<BookVO> bookVOList = new ArrayList<>();
-        for (Book book : bookList) {
-            BookVO bookVO = new BookVO();
-            BeanUtils.copyProperties(book, bookVO);
-            bookVOList.add(bookVO);
-        }
-        return bookVOList;
+        return this.page(page, queryWrapper);
     }
 
     /**

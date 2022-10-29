@@ -1,8 +1,8 @@
 package com.yizai.libraryms.model.dto;
 
+import com.yizai.libraryms.common.PageRequest;
 import lombok.Data;
-
-import java.io.Serializable;
+import lombok.EqualsAndHashCode;
 
 /**
  * 书籍查询封装类
@@ -10,9 +10,9 @@ import java.io.Serializable;
  * @author yizai
  * @since 2022/10/29 02:00
  */
+@EqualsAndHashCode(callSuper = true)
 @Data
-public class BookQuery implements Serializable {
-    private static final long serialVersionUID = -1432429963489994866L;
+public class BookQuery extends PageRequest {
     private Long id;
     private String bookName;
     private String bookDescription;

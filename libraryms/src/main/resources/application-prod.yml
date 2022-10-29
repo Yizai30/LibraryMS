@@ -9,6 +9,8 @@ spring:
     console:
       path: /h2
       enabled: true
+      settings:
+        web-allow-others: true
 
   # swagger config
   mvc:
@@ -19,12 +21,6 @@ spring:
 
   session:
     store-type: redis
-
-  # redis config
-  redis:
-    port: 6379
-    host: localhost
-    database: 3
 
 mybatis-plus:
   configuration:

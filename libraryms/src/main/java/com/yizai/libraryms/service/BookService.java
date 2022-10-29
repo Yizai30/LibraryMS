@@ -1,5 +1,7 @@
 package com.yizai.libraryms.service;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.yizai.libraryms.model.Book;
 import com.yizai.libraryms.model.dto.BookQuery;
@@ -34,10 +36,11 @@ public interface BookService extends IService<Book> {
     boolean updateBook(BookUpdateRequest bookUpdateRequest, HttpServletRequest request);
 
     /**
-     * 查询书籍信息
+     * 分页查询书籍信息
      *
-     * @param bookQuery 查询请求
-     * @return 书籍信息展示实体
+     * @param page 分页对象
+     * @param bookQuery 查询请求对象
+     * @return 分页查询数据
      */
-    List<BookVO> listBooks(BookQuery bookQuery);
+    Page<Book> listBooksByPage(Page<Book> page, BookQuery bookQuery);
 }

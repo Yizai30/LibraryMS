@@ -1,20 +1,24 @@
 package com.yizai.libraryms.controller;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.yizai.libraryms.common.BaseResponse;
 import com.yizai.libraryms.common.ErrorCode;
 import com.yizai.libraryms.common.ResultUtils;
 import com.yizai.libraryms.exception.BusinessException;
+import com.yizai.libraryms.model.Book;
 import com.yizai.libraryms.model.dto.BookQuery;
 import com.yizai.libraryms.model.request.BookInsertRequest;
 import com.yizai.libraryms.model.request.BookUpdateRequest;
-import com.yizai.libraryms.model.vo.BookVO;
 import com.yizai.libraryms.service.BookService;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
-import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 /**
  * @author yizai
@@ -26,6 +30,9 @@ public class BookController {
 
     @Resource
     private BookService bookService;
+
+    @Resource
+    private RedisTemplate<String, Page<Book>> redisTemplate;
 
     @PostMapping("/insert")
     public BaseResponse<Long> bookInsert(@RequestBody BookInsertRequest bookInsertRequest, HttpServletRequest request) {
@@ -65,12 +72,22 @@ public class BookController {
         return ResultUtils.success(true);
     }
 
-    @GetMapping("/list")
-    public BaseResponse<List<BookVO>> listBooks(BookQuery bookQuery) {
+    @GetMapping("/list/page")
+    public BaseResponse<Page<Book>> listTeamsByPage(BookQuery bookQuery) {
         if (bookQuery == null) {
             throw new BusinessException(ErrorCode.PARAMS_ERROR);
         }
-        List<BookVO> bookList = bookService.listBooks(bookQuery);
-        return ResultUtils.success(bookList);
+        ValueOperations<String, Page<Book>> valueOperations = redisTemplate.opsForValue();
+        Page<Book> cachePage = valueOperations.get(bookQuery.toString());
+        Page<Book> resultPage = new Page<>();
+        if (cachePage == null) {
+            resultPage = bookService.listBooksByPage(
+                    new Page<>(bookQuery.getPageNum(), bookQuery.getPageSize()),
+                    bookQuery);
+            valueOperations.set(bookQuery.toString(), resultPage, 300000, TimeUnit.MILLISECONDS);
+        } else {
+            resultPage = cachePage;
+        }
+        return ResultUtils.success(resultPage);
     }
 }
